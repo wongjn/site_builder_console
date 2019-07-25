@@ -182,8 +182,12 @@ class CreateCommand extends ContainerAwareCommand {
    * {@inheritdoc}
    */
   protected function execute(InputInterface $input, OutputInterface $output) {
+    $entity_type = $input->getOption('entity-type');
+    $bundle_name = $input->getOption('bundle-name');
+    $bundle_label = $input->getOption('bundle-label');
+
     $bundle_entity_id = $this->entityTypeManager
-      ->getDefinition($input->getOption('entity-type'))
+      ->getDefinition($entity_type)
       ->getBundleEntityType();
 
     $bundle_definition = $this->entityTypeManager->getDefinition($bundle_entity_id);
@@ -191,8 +195,8 @@ class CreateCommand extends ContainerAwareCommand {
     $this->entityTypeManager
       ->getStorage($bundle_entity_id)
       ->create([
-        $bundle_definition->getKey('id') => $input->getOption('bundle-name'),
-        $bundle_definition->getKey('label') => $input->getOption('bundle-label'),
+        $bundle_definition->getKey('id') => $bundle_name,
+        $bundle_definition->getKey('label') => $bundle_label,
       ])
       ->save();
 
@@ -204,10 +208,26 @@ class CreateCommand extends ContainerAwareCommand {
       $field['instance']->save();
     }
 
+    $display_create_parameters = [
+      'targetEntityType' => $entity_type,
+      'bundle' => $bundle_name,
+      'mode' => 'default',
+      'status' => TRUE,
+    ];
+
+    $this->entityTypeManager
+      ->getStorage('entity_form_display')
+      ->create($display_create_parameters)
+      ->save();
+    $this->entityTypeManager
+      ->getStorage('entity_view_display')
+      ->create($display_create_parameters)
+      ->save();
+
     $output->writeln(sprintf(
       $this->trans('commands.site_builder_console.bundle.messages.created'),
-      $input->getOption('entity-type'),
-      $input->getOption('bundle-label')
+      $entity_type,
+      $bundle_label
     ));
   }
 
