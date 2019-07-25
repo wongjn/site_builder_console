@@ -9,5 +9,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Add site_builder_console:bundle:create command
 - Add site_builder_console:bundle:delete command
+- Add site_builder_console:field:delete command
 
 [Unreleased]: https://github.com/wongjn/site_builder_console/commits

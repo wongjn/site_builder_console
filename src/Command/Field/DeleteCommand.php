@@ -1,16 +1,16 @@
 <?php
 
-namespace Drupal\site_builder_console\Command\Bundle;
+namespace Drupal\site_builder_console\Command\Field;
 
 use Drupal\Console\Annotations\DrupalCommand;
 use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+use Drupal\site_builder_console\Command\Bundle\BundleTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Deletes an entity bundle on the current site.
+ * Deletes a field instance on the current site.
  *
  * @DrupalCommand(
  *   extension="site_builder_console",
@@ -20,6 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DeleteCommand extends ContainerAwareCommand {
 
   use BundleTrait;
+  use FieldTrait;
 
   /**
    * The entity type manager.
@@ -44,12 +45,13 @@ class DeleteCommand extends ContainerAwareCommand {
    */
   protected function configure() {
     $this
-      ->setName('site_builder_console:bundle:delete')
-      ->setDescription($this->trans('commands.site_builder_console.bundle.delete.description'))
-      ->setHelp($this->trans('commands.site_builder_console.bundle.delete.help'))
+      ->setName('site_builder_console:field:delete')
+      ->setDescription($this->trans('commands.site_builder_console.field.delete.description'))
+      ->setHelp($this->trans('commands.site_builder_console.field.delete.help'))
       ->addEntityTypeOption()
       ->addBundleNameOption()
-      ->setAliases(['sbd']);
+      ->addFieldNameOption()
+      ->setAliases(['sfd']);
   }
 
   /**
@@ -67,25 +69,37 @@ class DeleteCommand extends ContainerAwareCommand {
       $bundle_name = $this->bundleChoiceQuestion($entity_type);
       $input->setOption('bundle-name', $bundle_name);
     }
+
+    $field_name = $input->getOption('field-name');
+    if (!$field_name) {
+      $field_name = $this->getIo()->choiceNoList(
+        $this->trans('commands.site_builder_console.field.questions.name'),
+        $this->getConfigurableFields($entity_type, $bundle_name)
+      );
+
+      $input->setOption('field-name', $field_name);
+    }
   }
 
   /**
    * {@inheritdoc}
    */
   protected function execute(InputInterface $input, OutputInterface $output) {
-    $bundle_entity_id = $this->entityTypeManager
-      ->getDefinition($input->getOption('entity-type'))
-      ->getBundleEntityType();
-
     $this->entityTypeManager
-      ->getStorage($bundle_entity_id)
-      ->load($input->getOption('bundle-name'))
+      ->getStorage('field_config')
+      ->load(sprintf(
+        '%s.%s.%s',
+        $input->getOption('entity-type'),
+        $input->getOption('bundle-name'),
+        $input->getOption('field-name')
+      ))
       ->delete();
 
     $output->writeln(sprintf(
-      $this->trans('commands.site_builder_console.bundle.messages.deleted'),
+      $this->trans('commands.site_builder_console.field.messages.deleted'),
+      $input->getOption('field-name'),
       $input->getOption('entity-type'),
-      $input->getOption('bundle-label')
+      $input->getOption('bundle-name')
     ));
   }
 

@@ -54,6 +54,22 @@ trait BundleTrait {
   }
 
   /**
+   * Asks an IO choice of existing bundles to a given entity type.
+   *
+   * @param string $entity_type
+   *   The entity type to select a bundle of.
+   *
+   * @return string
+   *   The bundle machine name.
+   */
+  protected function bundleChoiceQuestion($entity_type) {
+    return $this->getIo()->choiceNoList(
+      $this->trans('commands.site_builder_console.bundle.questions.bundle-name'),
+      array_keys($this->get('entity_type.bundle.info')->getBundleInfo($entity_type))
+    );
+  }
+
+  /**
    * Gets a list of content entity types.
    *
    * @return string[]

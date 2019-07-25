@@ -2,7 +2,9 @@
 
 namespace Drupal\site_builder_console\Command\Field;
 
+use Drupal\Core\Field\FieldConfigInterface;
 use Drupal\site_builder_console\Command\SettingsTrait;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Trait for dealing with fields.
@@ -10,6 +12,21 @@ use Drupal\site_builder_console\Command\SettingsTrait;
 trait FieldTrait {
 
   use SettingsTrait;
+
+  /**
+   * Adds the field name option to the command.
+   *
+   * @return $this
+   *   The command object for chaining.
+   */
+  protected function addFieldNameOption() {
+    return $this->addOption(
+      'field-name',
+      NULL,
+      InputOption::VALUE_REQUIRED,
+      $this->trans('commands.site_builder_console.field.options.name')
+    );
+  }
 
   /**
    * Asks IO questions to create a field for a bundle.
@@ -174,11 +191,11 @@ trait FieldTrait {
    *   When the field exists on the bundle.
    */
   public function validateFieldInstanceNotExists($entity_type, $bundle, $field_name) {
-    $matched_fields = $this->get('entity_type.manager')
+    $field_instance = $this->get('entity_type.manager')
       ->getStorage('field_config')
-      ->loadByProperties(['id' => "$entity_type.$bundle.$field_name"]);
+      ->load("$entity_type.$bundle.$field_name");
 
-    if (empty($matched_fields)) {
+    if (!$field_instance) {
       return $field_name;
     }
 
@@ -210,6 +227,33 @@ trait FieldTrait {
     }
 
     return $parsed;
+  }
+
+  /**
+   * Gets the field names of all configurable fields on a bundle.
+   *
+   * @param string $entity_type
+   *   The entity type to search in.
+   * @param string $bundle
+   *   The bundle of the entity type to search in.
+   *
+   * @return string[]
+   *   The names of the fields.
+   */
+  protected function getConfigurableFields($entity_type, $bundle) {
+    $definitions = $this->get('entity_type.manager')
+      ->getStorage('field_config')
+      ->loadByProperties([
+        'entity_type' => $entity_type,
+        'bundle' => $bundle,
+      ]);
+
+    return array_values(array_map(
+      function (FieldConfigInterface $definition) {
+        return $definition->getName();
+      },
+      $definitions
+    ));
   }
 
 }

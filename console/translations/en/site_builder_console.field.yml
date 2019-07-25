@@ -1,3 +1,8 @@
+delete:
+  description: 'Delete an field instance'
+  help: 'The <info>site_builder_console:field:delete</info> command helps you delete a field instance.'
+options:
+  name: 'Field machine name'
 questions:
   type: 'Enter the field type'
   name: 'Enter the field machine name'
@@ -5,3 +10,5 @@ questions:
   label: 'Enter the field label'
   description: 'Enter the field description'
   required: 'Is the field required?'
+messages:
+  deleted: 'Delete "%s" field on the "%s" "%s" bundle.'
