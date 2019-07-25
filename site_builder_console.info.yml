@@ -1,0 +1,5 @@
+name: Site Builder Console
+type: module
+description: Drupal console commands for site building tasks.
+core: 8.x
+package: Drupal Console

@@ -1,0 +1,16 @@
+{
+    "name": "wongjn/site_builder_console",
+    "description": "Drupal console commands for site building tasks.",
+    "type": "drupal-module",
+    "require": {
+        "drupal/console-core": "^1.9",
+        "drupal/console": "^1.9"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "wongjn",
+            "email": "11310624+wongjn@users.noreply.github.com"
+        }
+    ]
+}

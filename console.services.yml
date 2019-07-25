@@ -1,0 +1,11 @@
+services:
+  site_builder_console.bundle.create:
+    class: Drupal\site_builder_console\Command\Bundle\CreateCommand
+    arguments:
+      - '@entity_type.manager'
+      - '@entity_type.bundle.info'
+      - '@plugin.manager.field.field_type'
+      - '@console.string_converter'
+      - '@console.validator'
+    tags:
+      - { name: drupal.command }
