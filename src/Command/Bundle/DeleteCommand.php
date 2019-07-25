@@ -3,12 +3,10 @@
 namespace Drupal\site_builder_console\Command\Bundle;
 
 use Drupal\Console\Annotations\DrupalCommand;
-use Drupal\Console\Core\Command\Command;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\ContentEntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -19,7 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  *   extensionType="module"
  * )
  */
-class DeleteCommand extends Command {
+class DeleteCommand extends ContainerAwareCommand {
+
+  use BundleTrait;
 
   /**
    * The entity type manager.
@@ -57,18 +57,8 @@ class DeleteCommand extends Command {
       ->setName('site_builder_console:bundle:delete')
       ->setDescription($this->trans('commands.site_builder_console.bundle.delete.description'))
       ->setHelp($this->trans('commands.site_builder_console.bundle.delete.help'))
-      ->addOption(
-        'entity-type',
-        NULL,
-        InputOption::VALUE_REQUIRED,
-        $this->trans('commands.site_builder_console.bundle.options.entity-type')
-      )
-      ->addOption(
-        'bundle-name',
-        NULL,
-        InputOption::VALUE_REQUIRED,
-        $this->trans('commands.site_builder_console.bundle.options.bundle-name')
-      )
+      ->addEntityTypeOption()
+      ->addBundleNameOption()
       ->setAliases(['sbd']);
   }
 
@@ -78,11 +68,8 @@ class DeleteCommand extends Command {
   protected function interact(InputInterface $input, OutputInterface $output) {
     $entity_type = $input->getOption('entity-type');
     if (!$entity_type) {
-      $entity_type = $this->getIo()->choiceNoList(
-        $this->trans('commands.site_builder_console.bundle.questions.entity-type'),
-        $this->getContentEntityTypes()
-      );
-      $input->setOption('entity_type', $entity_type);
+      $entity_type = $this->entityTypeQuestion();
+      $input->setOption('entity-type', $entity_type);
     }
 
     $bundle_name = $input->getOption('bundle-name');
@@ -93,26 +80,6 @@ class DeleteCommand extends Command {
       );
       $input->setOption('bundle-name', $bundle_name);
     }
-  }
-
-  /**
-   * Gets a list of content entity types.
-   *
-   * @return string[]
-   *   Array of content entity type machine names.
-   */
-  protected function getContentEntityTypes() {
-    static $types;
-
-    if (!isset($types)) {
-      foreach ($this->entityTypeManager->getDefinitions() as $key => $definition) {
-        if ($definition instanceof ContentEntityTypeInterface) {
-          $types[] = $key;
-        }
-      }
-    }
-
-    return $types;
   }
 
   /**

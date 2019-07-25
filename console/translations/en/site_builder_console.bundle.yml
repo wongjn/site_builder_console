@@ -14,13 +14,6 @@ questions:
   bundle-name: 'Enter the bundle machine name'
   bundle-label: 'Enter the bundle human-readable name'
   new-field: 'Add a field?'
-  field:
-    type: 'Enter the field type'
-    name: 'Enter the field machine name'
-    cardinality: 'Enter the cardinality of the field (-1 for unlimited)'
-    label: 'Enter the field label'
-    description: 'Enter the field description'
-    required: 'Is the field required?'
 messages:
   created: 'Created new content bundle "%s".'
   deleted: 'Delete content bundle "%s".'
