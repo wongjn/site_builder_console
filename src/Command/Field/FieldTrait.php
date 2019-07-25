@@ -103,6 +103,7 @@ trait FieldTrait {
         'type' => $field['type'],
         'field_name' => $field['name'],
         'entity_type' => $entity_type,
+        'translatable' => FALSE,
       ]);
 
     $type_definition = $this->get('plugin.manager.field.field_type')->getDefinition($field['type']);
