@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\site_builder_console\Command\Bundle\BundleTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Deletes a field instance on the current site.
@@ -50,6 +51,12 @@ class DeleteCommand extends ContainerAwareCommand {
       ->setHelp($this->trans('commands.site_builder_console.field.delete.help'))
       ->addEntityTypeOption()
       ->addBundleNameOption()
+      ->addOption(
+        'field-type',
+        NULL,
+        InputOption::VALUE_REQUIRED,
+        $this->trans('commands.site_builder_console.field.options.type')
+      )
       ->addFieldNameOption()
       ->setAliases(['sfd']);
   }

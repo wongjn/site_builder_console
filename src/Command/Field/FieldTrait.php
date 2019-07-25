@@ -35,6 +35,10 @@ trait FieldTrait {
    *   The entity type the field will be attached to.
    * @param string $bundle
    *   The bundle the field will be attached to.
+   * @param string $field_type
+   *   (optional) The field type.
+   * @param string $field_name
+   *   (optional) The name of the field.
    *
    * @return array
    *   A list of field parameters containing:
@@ -44,15 +48,15 @@ trait FieldTrait {
    *     be created from this operation, NULL otherwise.
    *   - instance: Unsaved \Drupal\Core\Field\FieldConfigBase for the field.
    */
-  protected function fieldCreateQuestion($entity_type, $bundle) {
+  protected function fieldCreateQuestion($entity_type, $bundle, $field_type = '', $field_name = '') {
     $field = [];
 
-    $field['type'] = $this->getIo()->choiceNoList(
+    $field['type'] = $field_type ?: $this->getIo()->choiceNoList(
       $this->trans('commands.site_builder_console.field.questions.type'),
       array_keys($this->get('plugin.manager.field.field_type')->getUiDefinitions())
     );
 
-    $field['name'] = $this->getIo()->ask(
+    $field['name'] = $field_name ?: $this->getIo()->ask(
       $this->trans('commands.site_builder_console.field.questions.name'),
       "field_$field[type]",
       function ($name) use ($entity_type, $bundle) {
@@ -139,6 +143,7 @@ trait FieldTrait {
     $instance = $this->get('entity_type.manager')
       ->getStorage('field_config')
       ->create([
+        'field_storage' => $field['storage'],
         'entity_type' => $entity_type,
         'field_name' => $field['name'],
         'bundle' => $bundle,

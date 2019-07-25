@@ -14,6 +14,11 @@ services:
     tags:
       - { name: drupal.command }
 
+  site_builder_console.field.create:
+    class: Drupal\site_builder_console\Command\Field\CreateCommand
+    arguments: []
+    tags:
+      - { name: drupal.command }
   site_builder_console.field.delete:
     class: Drupal\site_builder_console\Command\Field\DeleteCommand
     arguments: ['@entity_type.manager']

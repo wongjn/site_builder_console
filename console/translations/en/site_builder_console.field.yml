@@ -1,8 +1,12 @@
+create:
+  description: 'Create an field instance'
+  help: 'The <info>site_builder_console:field:create</info> command helps you create a field instance.'
 delete:
   description: 'Delete an field instance'
   help: 'The <info>site_builder_console:field:delete</info> command helps you delete a field instance.'
 options:
   name: 'Field machine name'
+  type: 'Field type'
 questions:
   type: 'Enter the field type'
   name: 'Enter the field machine name'
@@ -11,4 +15,5 @@ questions:
   description: 'Enter the field description'
   required: 'Is the field required?'
 messages:
-  deleted: 'Delete "%s" field on the "%s" "%s" bundle.'
+  created: 'Created "%s" field on the "%s" "%s" bundle.'
+  deleted: 'Deleted "%s" field on the "%s" "%s" bundle.'
