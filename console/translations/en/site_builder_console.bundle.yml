@@ -15,5 +15,5 @@ questions:
   bundle-label: 'Enter the bundle human-readable name'
   new-field: 'Add a field?'
 messages:
-  created: 'Created new content bundle "%s".'
-  deleted: 'Delete content bundle "%s".'
+  created: 'Created new "%s" content bundle "%s".'
+  deleted: 'Deleted "%s" content bundle "%s".'
