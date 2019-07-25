@@ -13,7 +13,7 @@ trait BundleTrait {
   /**
    * Adds the entity type option to the command.
    *
-   * @return self
+   * @return $this
    *   The command object for chaining.
    */
   protected function addEntityTypeOption() {
@@ -28,7 +28,7 @@ trait BundleTrait {
   /**
    * Adds the bundle name option to the command.
    *
-   * @return self
+   * @return $this
    *   The command object for chaining.
    */
   protected function addBundleNameOption() {
