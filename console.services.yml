@@ -9,3 +9,8 @@ services:
       - '@console.validator'
     tags:
       - { name: drupal.command }
+  site_builder_console.bundle.delete:
+    class: Drupal\site_builder_console\Command\Bundle\DeleteCommand
+    arguments: ['@entity_type.manager', '@entity_type.bundle.info']
+    tags:
+      - { name: drupal.command }

@@ -23,3 +23,4 @@ questions:
     required: 'Is the field required?'
 messages:
   created: 'Created new content bundle "%s".'
+  deleted: 'Delete content bundle "%s".'
