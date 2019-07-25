@@ -3,8 +3,8 @@
     "description": "Drupal console commands for site building tasks.",
     "type": "drupal-module",
     "require": {
-        "drupal/console-core": "^1.9",
-        "drupal/console": "^1.9"
+        "drupal/console-core": "^1.0",
+        "drupal/console": "^1.0"
     },
     "license": "MIT",
     "authors": [
