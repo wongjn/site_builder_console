@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Create `form` and `view` display configurations for new bundles
 - Add further options for node bundles
 
+### Fixed
+- Fix bundle delete complete message
+
 ## [0.1.2] - 2019-07-25
 ### Changed
 - Match translatable setting to core when on create

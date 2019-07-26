@@ -85,7 +85,7 @@ class DeleteCommand extends ContainerAwareCommand {
     $output->writeln(sprintf(
       $this->trans('commands.site_builder_console.bundle.messages.deleted'),
       $input->getOption('entity-type'),
-      $input->getOption('bundle-label')
+      $input->getOption('bundle-name')
     ));
   }
 
