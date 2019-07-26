@@ -8,11 +8,17 @@ options:
   entity-type: 'Bundle entity type'
   bundle-name: 'Bundle machine name'
   bundle-label: 'Bundle human-readable name'
+  bundle-description: 'Bundle description'
   fields: 'Bundle fields'
 questions:
   entity-type: 'Enter the entity type'
   bundle-name: 'Enter the bundle machine name'
   bundle-label: 'Enter the bundle human-readable name'
+  bundle-description: 'Enter a description for the bundle'
+  show-created: 'Show "Authored on" in form display?'
+  show-path: 'Show "URL alias" in form display?'
+  show-submitted: 'Display submitted?'
+  full-crud: 'Give editors full CRUD permissions?'
   new-field: 'Add a field?'
 messages:
   created: 'Created new "%s" content bundle "%s".'
