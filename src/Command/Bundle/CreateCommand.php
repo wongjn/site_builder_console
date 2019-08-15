@@ -215,6 +215,16 @@ class CreateCommand extends ContainerAwareCommand {
       $this->trans('commands.site_builder_console.bundle.questions.full-crud')
     );
 
+    if ($this->get('module_handler')->moduleExists('menu_ui')) {
+      $menus = menu_ui_get_menus();
+      $options['menus'] = $this->getIo()->choice(
+        $this->trans('commands.site_builder_console.bundle.questions.menus'),
+        $menus,
+        isset($menus['main']) ? $menus['main'] : NULL,
+        TRUE
+      );
+    }
+
     return $options;
   }
 
@@ -335,6 +345,7 @@ class CreateCommand extends ContainerAwareCommand {
    *   - full_crud: Whether to give full CRUD permission of this bundle to
    *     the Editor role (if it exists). This includes creation and deletion;
    *     otherwise only editing is allowed.
+   *   - menus: Array of menus that nodes of the bundle can be added to.
    */
   protected function applyNodeBundleSettings(NodeTypeInterface $bundle, array $options) {
     $options += [
@@ -395,6 +406,17 @@ class CreateCommand extends ContainerAwareCommand {
       }
 
       $editor_role->save();
+    }
+
+    if ($this->get('module_handler')->moduleExists('menu_ui')) {
+      $bundle
+        ->setThirdPartySetting('menu_ui', 'available_menus', $options['menus'])
+        ->setThirdPartySetting(
+          'menu_ui',
+          'parent',
+          empty($options['menus']) ? '' : reset($options['menus']) . ':'
+        )
+        ->save();
     }
   }
 
