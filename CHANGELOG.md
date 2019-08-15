@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Add site_builder_console:responsive_image:create command
 
+### Changed
+- Show success messages as success
+
 ## [0.2.0]
 ### Added
 - Create `form` and `view` display configurations for new bundles

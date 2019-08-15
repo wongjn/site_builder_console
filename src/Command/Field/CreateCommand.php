@@ -76,7 +76,7 @@ class CreateCommand extends ContainerAwareCommand {
 
     $this->field['instance']->save();
 
-    $output->writeln(sprintf(
+    $this->getIo()->success(sprintf(
       $this->trans('commands.site_builder_console.field.messages.created'),
       $this->field['name'],
       $input->getOption('entity-type'),

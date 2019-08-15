@@ -315,7 +315,7 @@ class CreateCommand extends ContainerAwareCommand {
         break;
     }
 
-    $output->writeln(sprintf(
+    $this->getIo()->success(sprintf(
       $this->trans('commands.site_builder_console.bundle.messages.created'),
       $entity_type,
       $bundle_label

@@ -102,7 +102,7 @@ class DeleteCommand extends ContainerAwareCommand {
       ))
       ->delete();
 
-    $output->writeln(sprintf(
+    $this->getIo()->success(sprintf(
       $this->trans('commands.site_builder_console.field.messages.deleted'),
       $input->getOption('field-name'),
       $input->getOption('entity-type'),
