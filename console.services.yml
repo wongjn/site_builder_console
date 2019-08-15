@@ -25,3 +25,9 @@ services:
     arguments: ['@entity_type.manager']
     tags:
       - { name: drupal.command }
+
+  site_builder_console.responsive_image.create:
+    class: Drupal\site_builder_console\Command\ResponsiveImage\CreateCommand
+    arguments: []
+    tags:
+      - { name: drupal.command }

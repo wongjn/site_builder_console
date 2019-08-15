@@ -1,0 +1,17 @@
+create:
+  description: 'Create a responsive image style with its derivatives'
+  help: 'The <info>site_builder_console:responsive_image:create</info> command helps you create a new responsive image style with its image style derivatives.'
+options:
+  id: 'Responsive image style machine name'
+  label: 'Responsive image style human-readable name'
+  width: 'The full size width'
+  height: 'The full size height'
+questions:
+  id: 'Enter the machine name'
+  label: 'Enter the human-readable name'
+  width: 'Enter the full size width'
+  height: 'Enter the full size height'
+messages:
+  exists-error: 'The "%s" responsive image style already exists.'
+  length-error: 'The length must be a positive integer.'
+  created: 'Created responsive image style "%s" (%s) with its image style derivates.'
