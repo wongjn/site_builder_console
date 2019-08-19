@@ -19,6 +19,7 @@ questions:
   show-path: 'Show "URL alias" in form display?'
   show-submitted: 'Display submitted?'
   full-crud: 'Give editors full CRUD permissions?'
+  add-menus: 'Enable menu UI'
   menus: 'List available menus'
   new-field: 'Add a field?'
 messages:

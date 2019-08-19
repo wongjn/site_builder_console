@@ -216,13 +216,22 @@ class CreateCommand extends ContainerAwareCommand {
     );
 
     if ($this->get('module_handler')->moduleExists('menu_ui')) {
-      $menus = menu_ui_get_menus();
-      $options['menus'] = $this->getIo()->choice(
-        $this->trans('commands.site_builder_console.bundle.questions.menus'),
-        $menus,
-        isset($menus['main']) ? $menus['main'] : NULL,
-        TRUE
+      $add_menus = $this->getIo()->confirm(
+        $this->trans('commands.site_builder_console.bundle.questions.add-menus')
       );
+
+      if (!$add_menus) {
+        $options['menus'] = [];
+      }
+      else {
+        $menus = menu_ui_get_menus();
+        $options['menus'] = $this->getIo()->choice(
+          $this->trans('commands.site_builder_console.bundle.questions.menus'),
+          $menus,
+          isset($menus['main']) ? $menus['main'] : NULL,
+          TRUE
+        );
+      }
     }
 
     return $options;
