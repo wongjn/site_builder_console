@@ -174,7 +174,9 @@ trait FieldTrait {
       )
     );
 
-    $settings = $instance->getSettings() + $this->get('plugin.manager.field.field_type')->getDefaultFieldSettings($field['type']);
+    $settings = $this
+      ->get('plugin.manager.field.field_type')
+      ->getDefaultFieldSettings($field['type']);
     $instance->setSettings($this->settingsQuestion($settings));
 
     return $instance;
