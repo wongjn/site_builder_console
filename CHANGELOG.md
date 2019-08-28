@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Removed
 - Remove repeated field storage setting questions
+- Remove view_unpublished integration
 
 ## [0.2.3] - 2019-08-19
 ### Fixed

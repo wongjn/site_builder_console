@@ -402,11 +402,6 @@ class CreateCommand extends ContainerAwareCommand {
       // Editors can edit the nodes of the bundle.
       $editor_role->grantPermission("edit any {$bundle->id()} content");
 
-      // Editors can view any unpublished nodes of the bundle.
-      if ($this->get('module_handler')->moduleExists('view_unpublished')) {
-        $editor_role->grantPermission("view any unpublished {$bundle->id()} content");
-      }
-
       // Editors may be given permissions to create and delete.
       if ($options['full_crud']) {
         $editor_role
